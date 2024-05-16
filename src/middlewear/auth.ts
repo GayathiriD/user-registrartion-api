@@ -13,7 +13,7 @@ interface DecodedToken {
 
 const auth = async (req: CustomRequest, res: Response, next: NextFunction) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer", "");
+    const token = req.header("Authorization")?.replace("Bearer ","");
     if (!token) {
       throw new Error("Authentication failed. Token missing.");
     }
@@ -32,6 +32,7 @@ const auth = async (req: CustomRequest, res: Response, next: NextFunction) => {
       throw new Error("Authentication failed. User not found.");
     }
 
+    req.user = user;
     req.token = token;
     next();
   } catch (error) {
